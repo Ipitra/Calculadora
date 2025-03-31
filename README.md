@@ -4,7 +4,6 @@
 #include <stdlib.h>
 #include <ctype.h>
 
-// Função para exibir o menu
 void exibirMenu() {
     printf("===============================\n");
     printf("       Calculadora Simples\n");
@@ -31,6 +30,8 @@ int main() {
             while (getchar() != '\n');
             continue;
         }
+        // Limpar o buffer após ler a opção (importante para evitar problemas com o próximo scanf)
+        while (getchar() != '\n');
 
         if (opcao < 1 || opcao > 5) {
             printf("Erro: Opção inválida. Por favor, digite um número entre 1 e 5.\n");
@@ -48,6 +49,7 @@ int main() {
             while (getchar() != '\n');
             continue;
         }
+        while (getchar() != '\n'); // Limpar o buffer
 
         printf("Digite o segundo número: ");
         if (scanf("%lf", &num2) != 1) {
@@ -55,6 +57,7 @@ int main() {
             while (getchar() != '\n');
             continue;
         }
+        while (getchar() != '\n'); // Limpar o buffer
 
         switch (opcao) {
             case 1:
@@ -78,16 +81,14 @@ int main() {
                 }
                 break;
             default:
-                // Já tratado acima, mas para evitar warnings
                 break;
         }
 
         if (opcao >= 1 && opcao <= 4) {
             printf("Deseja realizar outra operação? (s/n): ");
-            // Limpar o buffer de entrada de qualquer caractere newline pendente
-            while (getchar() != '\n');
             if (scanf("%c", &continuar) != 1) {
                 printf("Erro na leitura da resposta.\n");
+                while (getchar() != '\n');
                 break;
             }
             continuar = tolower(continuar);
@@ -96,15 +97,16 @@ int main() {
                 while (getchar() != '\n');
                 if (scanf("%c", &continuar) != 1) {
                     printf("Erro na leitura da resposta.\n");
-                    exit(EXIT_FAILURE); // Encerra o programa em caso de erro grave
+                    exit(EXIT_FAILURE);
                 }
                 continuar = tolower(continuar);
             }
         } else {
-            continuar = 'n'; // Para sair do loop após a opção 5
+            continuar = 'n';
         }
 
     } while (continuar == 's');
 
     return 0;
 }
+
